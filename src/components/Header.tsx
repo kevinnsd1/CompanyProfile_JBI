@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Menu, X, Globe, ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Company Logo component
 export const CompanyLogo: React.FC<{ className?: string }> = ({ className = "h-12 w-auto" }) => (
@@ -44,9 +45,20 @@ const Flags = {
   ),
 };
 
-export const CompanyHeader: React.FC = () => {
-  const [activeNav, setActiveNav] = useState('BERANDA');
-  const [activeLang, setActiveLang] = useState<'ID' | 'UK' | 'CN'>('ID');
+interface CompanyHeaderProps {
+  activeNav?: string;
+  onNavigate?: (navId: string) => void;
+}
+
+export const CompanyHeader: React.FC<CompanyHeaderProps> = ({ activeNav: externalActiveNav, onNavigate }) => {
+  const [internalActiveNav, setInternalActiveNav] = useState('BERANDA');
+  const activeNav = externalActiveNav || internalActiveNav;
+
+  const { lang, setLang, t } = useLanguage();
+  // Map internal 'UK' key → 'EN' for context
+  const activeLang = lang === 'EN' ? 'UK' : lang;
+  const handleSetLang = (flag: 'ID' | 'UK' | 'CN') => setLang(flag === 'UK' ? 'EN' : flag);
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -64,15 +76,59 @@ export const CompanyHeader: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Listen for Escape key to close modals
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false);
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const navItems = [
-    { id: 'BERANDA', label: 'BERANDA' },
-    { id: 'TENTANG', label: 'TENTANG' },
-    { id: 'PRODUK', label: 'PRODUK' },
-    { id: 'VIRTUAL', label: 'VIRTUAL' },
-    { id: 'PROYEK', label: 'PROYEK' },
-    { id: 'INFORMASI', label: 'INFORMASI' },
-    { id: 'KONTAK', label: 'KONTAK' },
+    { id: 'BERANDA', label: t('nav', 'BERANDA') },
+    { id: 'TENTANG', label: t('nav', 'TENTANG') },
+    { id: 'PRODUK', label: t('nav', 'PRODUK') },
+    { id: 'KONTAK', label: t('nav', 'KONTAK') },
   ];
+
+  const quickSearchTags = [
+    'Granit 60x120',
+    'Marmer Import',
+    'Sanitari Premium',
+    'Wall Panel WPC',
+    'Keramik Motif',
+    'Showroom IBCC',
+  ];
+
+  const searchDatabase = [
+    { title: 'Granit Tile Premium (60x120 & Large Slab)', category: 'Granit', desc: 'Permukaan kilau tinggi, anti gores, cocok untuk ruang tamu & komersial.', nav: 'PRODUK' },
+    { title: 'Marmer Natural Import (Carrara & Nero Marquina)', category: 'Marmer', desc: 'Urat alami elegan untuk meja counter, dinding aksen, & lantai mewah.', nav: 'PRODUK' },
+    { title: 'Sanitari Modern (Kloset Duduk, Wastafel, Shower)', category: 'Sanitari', desc: 'Koleksi sanitary perlengkapan kamar mandi berkualitas dan hemat air.', nav: 'PRODUK' },
+    { title: 'Wall Panel WPC & Fluted Board Accent', category: 'Wall Panel', desc: 'Panel dinding dekoratif tahan air & anti rayap untuk interior modern.', nav: 'PRODUK' },
+    { title: 'Keramik Lantai & Dinding Motif Terkini', category: 'Keramik', desc: 'Pilihan keramik tahan lama untuk dapur, teras, kamar mandi & garasi.', nav: 'PRODUK' },
+    { title: 'Showroom Utama JBI IBCC Bandung', category: 'Lokasi & Kontak', desc: 'Jl. Ahmad Yani Ruko IBCC Blok D3-6, Bandung. Telepon / WA direct.', nav: 'KONTAK' },
+  ];
+
+  const filteredResults = searchQuery.trim() === '' 
+    ? [] 
+    : searchDatabase.filter(item => 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.desc.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+  const handleNavClick = (id: string) => {
+    setInternalActiveNav(id);
+    if (onNavigate) {
+      onNavigate(id);
+    }
+  };
+
+
 
   return (
     <header className={`w-full bg-white border-b border-gray-100 sticky top-0 z-50 transition-all duration-300 ${
@@ -82,9 +138,9 @@ export const CompanyHeader: React.FC = () => {
         
         {/* Left: Sticky Header Logo - Clean solid header logo destination */}
         <div className="flex items-center shrink-0 min-w-[50px] min-h-[44px]">
-          <a href="#" className="flex items-center group">
+          <button onClick={() => handleNavClick('BERANDA')} className="flex items-center group cursor-pointer border-none bg-transparent">
             <CompanyLogo className="h-11 sm:h-13 md:h-14 w-auto group-hover:scale-105 transition-all duration-300 opacity-100 scale-100" />
-          </a>
+          </button>
         </div>
 
         {/* Center: Large Navigation Pill (Desktop) */}
@@ -97,7 +153,7 @@ export const CompanyHeader: React.FC = () => {
                   {index > 0 && <span className="text-gray-400 select-none font-normal text-sm">–</span>}
                   <li className="relative group">
                     <button
-                      onClick={() => setActiveNav(item.id)}
+                      onClick={() => handleNavClick(item.id)}
                       className={`px-1.5 py-1 transition-colors duration-150 cursor-pointer ${
                         isActive
                           ? 'text-gray-950 font-black'
@@ -105,6 +161,7 @@ export const CompanyHeader: React.FC = () => {
                       }`}
                     >
                       {item.label}
+
                       {/* Active underline matching Image 2 indicator */}
                       {isActive && (
                         <span className="absolute bottom-[-3px] left-0 w-full h-[2.5px] bg-gray-900 rounded-full animate-fade-in" />
@@ -123,7 +180,7 @@ export const CompanyHeader: React.FC = () => {
           {/* Language Flags */}
           <div className="hidden sm:flex items-center gap-2.5 px-1">
             <button
-              onClick={() => setActiveLang('CN')}
+              onClick={() => handleSetLang('CN')}
               title="Chinese"
               className={`p-0.5 rounded transition-transform hover:scale-110 ${
                 activeLang === 'CN' ? 'ring-2 ring-red-500/50 scale-105' : 'opacity-80 hover:opacity-100'
@@ -132,7 +189,7 @@ export const CompanyHeader: React.FC = () => {
               <Flags.CN />
             </button>
             <button
-              onClick={() => setActiveLang('UK')}
+              onClick={() => handleSetLang('UK')}
               title="English"
               className={`p-0.5 rounded transition-transform hover:scale-110 ${
                 activeLang === 'UK' ? 'ring-2 ring-blue-500/50 scale-105' : 'opacity-80 hover:opacity-100'
@@ -141,7 +198,7 @@ export const CompanyHeader: React.FC = () => {
               <Flags.UK />
             </button>
             <button
-              onClick={() => setActiveLang('ID')}
+              onClick={() => handleSetLang('ID')}
               title="Indonesian"
               className={`p-0.5 rounded transition-transform hover:scale-110 ${
                 activeLang === 'ID' ? 'ring-2 ring-red-500/50 scale-105' : 'opacity-80 hover:opacity-100'
@@ -153,22 +210,9 @@ export const CompanyHeader: React.FC = () => {
 
           {/* Social Media Pill Container */}
           <div className="hidden sm:flex items-center gap-4 bg-[#EFEFEF] px-5 py-3 rounded-full">
-            {/* TikTok */}
-            <a
-              href="https://tiktok.com"
-              target="_blank"
-              rel="noreferrer"
-              title="TikTok"
-              className="text-gray-700 hover:text-black transition-colors hover:scale-110 transform duration-150"
-            >
-              <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 2.494 6.341 6.341 0 0 0 1.074 8.78 6.336 6.336 0 0 0 8.784-1.075 6.31 6.31 0 0 0 1.554-4.218V8.868a8.219 8.219 0 0 0 4.219 1.258V6.686z" />
-              </svg>
-            </a>
-
             {/* WhatsApp */}
             <a
-              href="https://wa.me/"
+              href="https://wa.me/62882001078009"
               target="_blank"
               rel="noreferrer"
               title="WhatsApp"
@@ -181,7 +225,7 @@ export const CompanyHeader: React.FC = () => {
 
             {/* Instagram */}
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/jayabersamainterior"
               target="_blank"
               rel="noreferrer"
               title="Instagram"
@@ -195,50 +239,130 @@ export const CompanyHeader: React.FC = () => {
             </a>
           </div>
 
+
           {/* Search Circular Button */}
           <button
             onClick={() => setIsSearchOpen(!isSearchOpen)}
-            className="w-12 h-12 rounded-full bg-[#EFEFEF] hover:bg-gray-200 flex items-center justify-center text-gray-700 transition-all duration-150 active:scale-95 cursor-pointer"
-            title="Pencarian"
+            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer active:scale-95 ${
+              isSearchOpen 
+                ? 'bg-gray-900 text-white shadow-md rotate-90' 
+                : 'bg-[#EFEFEF] hover:bg-gray-200 text-gray-700'
+            }`}
+            title="Pencarian Produk"
           >
-            <Search className="w-5 h-5" />
+            {isSearchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
           </button>
 
-          {/* Menu / Hamburger Circular Button */}
+          {/* Hamburger Menu Circular Button - ONLY SHOWS ON MOBILE / TABLET MODE (< lg) */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-12 h-12 rounded-full bg-[#EFEFEF] hover:bg-gray-200 flex items-center justify-center text-gray-700 transition-all duration-150 active:scale-95 cursor-pointer"
-            title="Menu Navigasi"
+            className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#EFEFEF] hover:bg-gray-200 flex lg:hidden items-center justify-center text-gray-700 transition-all duration-150 active:scale-95 cursor-pointer"
+            title="Menu Navigasi Mobile"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X className="w-5.5 h-5.5" /> : <Menu className="w-5.5 h-5.5" />}
           </button>
         </div>
       </div>
 
-      {/* Expandable Search Bar overlay */}
+      {/* Smooth Premium Glassmorphism Floating Search Bar & Recommendations Overlay */}
       {isSearchOpen && (
-        <div className="bg-[#F8F9FA] border-t border-b border-gray-200 py-4 px-6 sm:px-10 animate-in slide-in-from-top duration-200">
-          <div className="max-w-4xl mx-auto flex items-center gap-4">
-            <Search className="w-6 h-6 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Cari produk, proyek, atau informasi..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              autoFocus
-              className="flex-1 bg-transparent border-none outline-none text-base text-gray-900 placeholder:text-gray-400"
-            />
-            {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="text-xs text-gray-400 hover:text-gray-600">
-                Clear
+        <div className="fixed inset-0 top-[68px] sm:top-[85px] z-50 bg-black/40 backdrop-blur-sm transition-all duration-300 flex justify-center items-start pt-3 sm:pt-6 px-4">
+          <div 
+            className="w-full max-w-3xl bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all transform duration-300 animate-in fade-in slide-in-from-top-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Search Input Field */}
+            <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center gap-3.5 bg-gray-50/50">
+              <Search className="w-6 h-6 text-amber-600 shrink-0" />
+              <input
+                type="text"
+                placeholder="Cari produk (contoh: Granit 60x120, Sanitari, Marmer, IBCC)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+                className="w-full bg-transparent border-none outline-none text-base sm:text-lg font-medium text-gray-900 placeholder:text-gray-400"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="p-1 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-200 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+              <button
+                onClick={() => setIsSearchOpen(false)}
+                className="px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-semibold hover:bg-gray-800 transition-colors shrink-0"
+              >
+                Tutup [ESC]
               </button>
-            )}
-            <button
-              onClick={() => setIsSearchOpen(false)}
-              className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-gray-700 text-xs font-semibold"
-            >
-              Tutup
-            </button>
+            </div>
+
+            {/* Quick Suggestions & Live Search Results */}
+            <div className="p-4 sm:p-6 max-h-[65vh] overflow-y-auto space-y-5">
+              
+              {/* Quick Tags when empty query */}
+              {searchQuery.trim() === '' && (
+                <div>
+                  <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Pencarian Populer</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {quickSearchTags.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => setSearchQuery(tag)}
+                        className="px-3.5 py-1.5 bg-gray-100 hover:bg-amber-50 hover:text-amber-800 hover:border-amber-300 border border-gray-200 text-gray-700 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer"
+                      >
+                        🔍 {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Live Filter Results */}
+              {searchQuery.trim() !== '' && (
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                      Hasil Pencarian ({filteredResults.length})
+                    </h4>
+                  </div>
+
+                  {filteredResults.length > 0 ? (
+                    <div className="space-y-2.5">
+                      {filteredResults.map((res, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => {
+                            handleNavClick(res.nav);
+                            setIsSearchOpen(false);
+                          }}
+                          className="p-3.5 rounded-xl hover:bg-amber-50/70 border border-transparent hover:border-amber-200/80 transition-all cursor-pointer group flex items-start justify-between gap-3"
+                        >
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="px-2 py-0.5 bg-amber-100 text-amber-900 rounded text-[10px] font-bold uppercase tracking-wider">
+                                {res.category}
+                              </span>
+                              <h5 className="font-bold text-sm text-gray-900 group-hover:text-amber-800 transition-colors">
+                                {res.title}
+                              </h5>
+                            </div>
+                            <p className="text-xs text-gray-600 line-clamp-1">{res.desc}</p>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-amber-600 shrink-0 self-center group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-gray-400 text-sm">
+                      <p className="font-semibold text-gray-600">Tidak ada hasil untuk "{searchQuery}"</p>
+                      <p className="text-xs mt-1">Coba kata kunci lain seperti Granit, Marmer, Sanitari, atau IBCC.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -253,9 +377,10 @@ export const CompanyHeader: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => {
-                  setActiveNav(item.id);
+                  handleNavClick(item.id);
                   setIsMobileMenuOpen(false);
                 }}
+
                 className={`flex items-center justify-between py-2.5 text-left text-base font-semibold transition-colors ${
                   activeNav === item.id ? 'text-red-600 font-bold' : 'text-gray-800 hover:text-gray-950'
                 }`}
@@ -272,9 +397,9 @@ export const CompanyHeader: React.FC = () => {
               <Globe className="w-5 h-5 text-gray-400" />
               <span className="text-xs font-medium text-gray-500">Bahasa:</span>
               <div className="flex items-center gap-2">
-                <button onClick={() => setActiveLang('CN')} className={`p-1 rounded ${activeLang === 'CN' ? 'ring-2 ring-red-500' : ''}`}><Flags.CN /></button>
-                <button onClick={() => setActiveLang('UK')} className={`p-1 rounded ${activeLang === 'UK' ? 'ring-2 ring-blue-500' : ''}`}><Flags.UK /></button>
-                <button onClick={() => setActiveLang('ID')} className={`p-1 rounded ${activeLang === 'ID' ? 'ring-2 ring-red-500' : ''}`}><Flags.ID /></button>
+                <button onClick={() => handleSetLang('CN')} className={`p-1 rounded ${activeLang === 'CN' ? 'ring-2 ring-red-500' : ''}`}><Flags.CN /></button>
+                <button onClick={() => handleSetLang('UK')} className={`p-1 rounded ${activeLang === 'UK' ? 'ring-2 ring-blue-500' : ''}`}><Flags.UK /></button>
+                <button onClick={() => handleSetLang('ID')} className={`p-1 rounded ${activeLang === 'ID' ? 'ring-2 ring-red-500' : ''}`}><Flags.ID /></button>
               </div>
             </div>
 
@@ -293,6 +418,7 @@ export const CompanyHeader: React.FC = () => {
 
 // Brand Sub-Header: Seamless bi-directional morphing emergence / docking animation without ghosting
 export const BrandSubHeader: React.FC = () => {
+  const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -352,11 +478,17 @@ export const BrandSubHeader: React.FC = () => {
         {/* Right: Welcome Greeting & Contact numbers */}
         <div className="flex flex-col items-start sm:items-end justify-center space-y-1 text-gray-500">
           <span className="text-sm sm:text-base font-normal tracking-wide text-gray-400">
-            Selamat datang!
+            {t('brandSubHeader', 'greeting')}
           </span>
           <div className="flex flex-col items-start sm:items-end font-semibold text-gray-700 text-sm sm:text-base tracking-tight pt-2 space-y-0.5">
-            <a href="tel:02166691080" className="hover:text-red-600 transition-colors">(021) 66691080</a>
-            <a href="https://wa.me/6281297040598" target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">+62-812-9704-0598</a>
+            <a href="mailto:jayabersamainterior@gmail.com" className="hover:text-red-600 transition-colors flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              jayabersamainterior@gmail.com
+            </a>
+            <a href="https://wa.me/62882001078009" target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 opacity-70 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.887-9.892-5.448 0-9.886 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              +62 882-0010-78009
+            </a>
           </div>
         </div>
 

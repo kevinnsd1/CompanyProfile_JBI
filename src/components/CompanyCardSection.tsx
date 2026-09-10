@@ -1,10 +1,11 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { RunningAdBanner } from './RunningAdBanner';
 
 export const CompanyCardSection: React.FC = () => {
   return (
-    <section className="w-full bg-white relative pt-1 pb-16">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+    <section className="w-full bg-white relative pt-1 pb-4">
+      <div className="w-full px-4 sm:px-6 lg:px-8 pb-8">
         {/* Main Card Container with Light Architectural Background */}
         <div className="relative overflow-hidden bg-[#F8F9FA] border border-gray-100/80 rounded-sm py-12 sm:py-16 md:py-20 px-6 sm:px-12 md:px-16">
           
@@ -56,8 +57,12 @@ export const CompanyCardSection: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Running Ad Banner (Iklan Berjalan) directly under the Card */}
+      <RunningAdBanner />
     </section>
   );
 };
 
 export default CompanyCardSection;
+
