@@ -141,36 +141,36 @@ export const TentangPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNavig
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             
-            <div className="p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                <Award className="w-5.5 h-5.5" />
+            <div className="p-4 sm:p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 mx-auto mb-2 sm:mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                <Award className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5" />
               </div>
-              <div className="text-3xl font-extrabold text-gray-900">{t('tentang', 'statsYears')}</div>
-              <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1">{t('tentang', 'statsYearsLabel')}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">{t('tentang', 'statsYears')}</div>
+              <div className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1 leading-snug">{t('tentang', 'statsYearsLabel')}</div>
             </div>
 
-            <div className="p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                <ShieldCheck className="w-5.5 h-5.5" />
+            <div className="p-4 sm:p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 mx-auto mb-2 sm:mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                <ShieldCheck className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5" />
               </div>
-              <div className="text-3xl font-extrabold text-gray-900">{t('tentang', 'statsGuaranteed')}</div>
-              <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1">{t('tentang', 'statsGuaranteedLabel')}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">{t('tentang', 'statsGuaranteed')}</div>
+              <div className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1 leading-snug">{t('tentang', 'statsGuaranteedLabel')}</div>
             </div>
 
-            <div className="p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                <MapPin className="w-5.5 h-5.5" />
+            <div className="p-4 sm:p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 mx-auto mb-2 sm:mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                <MapPin className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5" />
               </div>
-              <div className="text-3xl font-extrabold text-gray-900">{t('tentang', 'statsShowroom')}</div>
-              <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1">{t('tentang', 'statsShowroomLabel')}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">{t('tentang', 'statsShowroom')}</div>
+              <div className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1 leading-snug">{t('tentang', 'statsShowroomLabel')}</div>
             </div>
 
-            <div className="p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                <CheckCircle2 className="w-5.5 h-5.5" />
+            <div className="p-4 sm:p-6 bg-white border border-gray-200/80 rounded-xl shadow-xs hover:shadow-md hover:border-red-200 transition-all">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 mx-auto mb-2 sm:mb-3 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                <CheckCircle2 className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5" />
               </div>
-              <div className="text-3xl font-extrabold text-gray-900">{t('tentang', 'statsBrand')}</div>
-              <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1">{t('tentang', 'statsBrandLabel')}</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">{t('tentang', 'statsBrand')}</div>
+              <div className="text-[10px] sm:text-xs text-gray-500 font-semibold uppercase tracking-wider mt-1 leading-snug">{t('tentang', 'statsBrandLabel')}</div>
             </div>
 
           </div>

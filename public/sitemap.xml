@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ===== HALAMAN UTAMA ===== -->
+  <url>
+    <loc>https://jayabersamainterior.com/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://jayabersamainterior.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://jayabersamainterior.com/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://jayabersamainterior.com/" />
+  </url>
+
+  <!-- ===== HALAMAN TENTANG ===== -->
+  <url>
+    <loc>https://jayabersamainterior.com/#tentang</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== HALAMAN PRODUK — SEMUA KATEGORI ===== -->
+  <url>
+    <loc>https://jayabersamainterior.com/#produk</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Produk: Granit -->
+  <url>
+    <loc>https://jayabersamainterior.com/#produk-granit</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Produk: Sanitari -->
+  <url>
+    <loc>https://jayabersamainterior.com/#produk-sanitari</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Produk: Keramik -->
+  <url>
+    <loc>https://jayabersamainterior.com/#produk-keramik</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Produk: Wall Panel -->
+  <url>
+    <loc>https://jayabersamainterior.com/#produk-wallpanel</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ===== HALAMAN KONTAK & SHOWROOM ===== -->
+  <url>
+    <loc>https://jayabersamainterior.com/#kontak</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

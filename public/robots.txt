@@ -1,0 +1,28 @@
+# ============================================================
+# robots.txt — Jaya Bersama Interior (jayabersamainterior.com)
+# ============================================================
+
+User-agent: *
+Allow: /
+
+# Sitemap for fast Google crawl
+Sitemap: https://jayabersamainterior.com/sitemap.xml
+
+# AI/GEO Engines
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

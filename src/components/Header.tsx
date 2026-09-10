@@ -266,9 +266,18 @@ export const CompanyHeader: React.FC<CompanyHeaderProps> = ({ activeNav: externa
 
       {/* Smooth Premium Glassmorphism Floating Search Bar & Recommendations Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 top-[68px] sm:top-[85px] z-50 bg-black/40 backdrop-blur-sm transition-all duration-300 flex justify-center items-start pt-3 sm:pt-6 px-4">
-          <div 
-            className="w-full max-w-3xl bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transition-all transform duration-300 animate-in fade-in slide-in-from-top-4"
+        <div
+          className="fixed inset-0 top-[68px] sm:top-[85px] z-50 flex justify-center items-start pt-3 sm:pt-6 px-4"
+          style={{
+            background: 'rgba(0,0,0,0.38)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            animation: 'searchOverlayIn 0.22s cubic-bezier(0.32,0.72,0,1) both',
+          }}
+        >
+          <div
+            className="w-full max-w-3xl bg-white/97 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-100 overflow-hidden"
+            style={{ animation: 'searchCardIn 0.28s cubic-bezier(0.32,0.72,0,1) both' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input Field */}
@@ -310,9 +319,10 @@ export const CompanyHeader: React.FC<CompanyHeaderProps> = ({ activeNav: externa
                       <button
                         key={tag}
                         onClick={() => setSearchQuery(tag)}
-                        className="px-3.5 py-1.5 bg-gray-100 hover:bg-amber-50 hover:text-amber-800 hover:border-amber-300 border border-gray-200 text-gray-700 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-gray-100 hover:bg-amber-50 hover:text-amber-800 hover:border-amber-300 border border-gray-200 text-gray-700 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer"
                       >
-                        🔍 {tag}
+                        <Search className="w-3 h-3 shrink-0 opacity-50" />
+                        {tag}
                       </button>
                     ))}
                   </div>
@@ -369,7 +379,10 @@ export const CompanyHeader: React.FC<CompanyHeaderProps> = ({ activeNav: externa
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 px-6 py-6 space-y-6 shadow-xl animate-in slide-in-from-top duration-200">
+        <div
+          className="lg:hidden bg-white border-t border-gray-100 px-6 py-6 space-y-6 shadow-xl"
+          style={{ animation: 'drawerSlideIn 0.3s cubic-bezier(0.32,0.72,0,1) both' }}
+        >
           {/* Mobile Links */}
           <div className="flex flex-col space-y-3">
             <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">Navigasi</span>
