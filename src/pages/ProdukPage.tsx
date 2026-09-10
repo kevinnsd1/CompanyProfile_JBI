@@ -247,7 +247,7 @@ export const ProdukPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNaviga
         {filteredBrands.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredBrands.map((b) => {
-              const isDarkContainer = b.id === 'titanium';
+              const isDarkContainer = b.id === 'titanium' || b.id === 'platinum';
               return (
                 <div
                   key={b.id}
@@ -316,10 +316,10 @@ export const ProdukPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNaviga
                   href={`https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20tertarik%20dengan%20katalog%20produk%20merek%20${encodeURIComponent(b.name)}.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+                  className="w-full px-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer text-center leading-snug"
                 >
-                  <PhoneCall className="w-3.5 h-3.5" />
-                  <span>{t('produk', 'askProduct')} {b.name}</span>
+                  <PhoneCall className="w-3.5 h-3.5 shrink-0" />
+                  <span className="line-clamp-2">{t('produk', 'askProduct')} {b.name}</span>
                 </a>
               </div>
             );
