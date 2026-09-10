@@ -313,13 +313,13 @@ export const ProdukPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNaviga
 
                 {/* WA Inquiry Direct Action Button */}
                 <a
-                  href={`https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20tertarik%20dengan%20katalog%20produk%20merek%20${encodeURIComponent(b.name)}.`}
+                  href={`https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20tertarik%20dengan%20katalog%20produk%20merek%20${encodeURIComponent(b.name)}.%20Saya%20mendapatkan%20informasi%20ini%20dari%20website%20Jaya%20Bersama%20Interior.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full px-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] sm:text-xs uppercase tracking-wider rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer text-center leading-snug"
+                  className="w-full px-3 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] sm:text-[11px] lg:text-xs uppercase tracking-wider rounded-xl shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2.5 active:scale-95 cursor-pointer"
                 >
-                  <PhoneCall className="w-3.5 h-3.5 shrink-0" />
-                  <span className="line-clamp-2">{t('produk', 'askProduct')} {b.name}</span>
+                  <PhoneCall className="w-4 h-4 shrink-0" />
+                  <span className="leading-snug max-w-[85%]">{t('produk', 'askProduct')} {b.name}</span>
                 </a>
               </div>
             );
@@ -356,7 +356,7 @@ export const ProdukPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNaviga
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <a
-                href="https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20ingin%20jadwal%20kunjungan%20ke%20showroom."
+                href="https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20ingin%20jadwal%20kunjungan%20ke%20showroom.%20Saya%20mendapatkan%20informasi%20ini%20dari%20website%20Jaya%20Bersama%20Interior."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-2"

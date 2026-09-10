@@ -112,7 +112,7 @@ export const TentangPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNavig
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
-              href="https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20ingin%20konsultasi%20mengenai%20produk%20interior."
+              href="https://wa.me/62882001078009?text=Halo%20Jaya%20Bersama%20Interior,%20saya%20ingin%20konsultasi%20mengenai%20produk%20interior.%20Saya%20mendapatkan%20informasi%20ini%20dari%20website%20Jaya%20Bersama%20Interior."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
@@ -289,7 +289,7 @@ export const TentangPage: React.FC<{ onNavigateHome?: () => void }> = ({ onNavig
               </a>
 
               <a
-                href="mailto:jayabersamainterior@gmail.com"
+                href="mailto:jayabersamainterior@gmail.com?subject=Tanya%20Produk%20JBI&body=Halo%20Jaya%20Bersama%20Interior,%20saya%20mendapatkan%20informasi%20ini%20dari%20website%20Jaya%20Bersama%20Interior.%0A%0A"
                 className="w-full py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
               >
                 <Send className="w-4 h-4 text-red-400" />
